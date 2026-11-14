@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+// Allow CLI execution (for GitHub Actions), but block non-GET web requests
+if (php_sapi_name() !== 'cli' && $_SERVER['REQUEST_METHOD'] !== 'GET') {
     corsJson(['error' => 'Method not allowed'], 405);
 }
 
